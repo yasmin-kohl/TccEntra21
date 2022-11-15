@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>--LOGIN--</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!--  <script src="js/scripts.js"></script> --> 
+   <script src="js/funcoes.js"></script> 
+
+  </head>
+
+  <body  >
+  
+    <div class="container" >
+      <a class="links" id="paracadastro"></a>
+      <div class="content">      
+       <!--FORMULÁRIO DE LOGIN-->
+        <div id="login">
+         <h1>Login</h1> 
+          <p> 
+           <label for="email_login">e-mail</label>
+           <input id="email_login" name="email_login" required="required" type="text" placeholder="contato@htmlecsspro.com"/>
+          </p>
+            
+         <p> 
+            <label for="senha_login">Sua senha</label>
+            <input id="senha_login" name="senha_login" required="required" type="password" placeholder="1234" /> 
+          </p>
+           
+         <button type="button" onclick="login()">   LOGIN  </button> 
+         <p class="link">
+            Ainda não tem conta?
+           <a href="telas/cadastro.html">Cadastre-se</a>
+         </p>  
+               
+        </div>
+      </div>
+    </div> 
+
+    <script>
+      //localStorage.removeItem("usuario"); 
+      localStorage.clear(); 
+      function validar(){
+        var userIdTela = document.getElementById("idUsuario").value; 
+        var senhaTela = document.getElementById("idSenha").value; 
+
+        var userIdBanco; 
+        var senhaBanco; 
+
+        if (userIdBanco === userIdTela && senhaBanco === senhaTela) {
+          localStorage.setItem("usuario", userIdBanco);
+          localStorage.setItem("senha", senhaBanco); 
+          window.location.href = "cadastro.html"
+
+        }else{
+          alert("Usuario ou Senha Incorreta!"); 
+        }
+      }
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+    
+
+    <style>
+      .main {
+        background-color: #e28743; 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        padding: 20px 0px 20px 0px;
+      }
+
+      .content {
+        background-color: #ffffff; 
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+      }
+
+    </style>
+
+    <script>
+		  function formatar(mascara, documento){
+		  	var i = documento.value.length;
+			  var saida = mascara.substring(0,1);
+			  var texto = mascara.substring(i)
+  
+			  if (texto.substring(0,1) != saida){
+			  	documento.value += texto.substring(0,1);
+		  	}  
+      }
+        
+      function cadastrarEndereco(){
+        var url = "http://localhost:8080/endereco";
+
+        var enderecos = {};
+        enderecos.cep = document.getElementById('idCep').value
+        enderecos.rua = document.getElementById('idRua').value
+        enderecos.bairro = document.getElementById('idBairro').value
+        enderecos.cidade = document.getElementById('idCidade').value
+        enderecos.estado = document.getElementById('idEstado').value
+        enderecos.numero = document.getElementById('idNumero').value
+        enderecos.idEndereco = document.getElementById('idEndereco').value
+
+        console.log("enderecos: " + enderecos);
+        var json = JSON.stringify(enderecos);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', url, true);
+        xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
+
+        xhr.onload = function () {
+          var endereco = JSON.parse(xhr.responseText);
+        }
+
+        xhr.send(json);    
+
+      }
+
+      function cadastrarUsuario(){
+        var url = "http://localhost:8080/usuario";
+
+        var usuarios = {};
+        var endereco = {};
+        
+        endereco.idEndereco = document.getElementById('idEndereco').value
+        usuarios.email = document.getElementById('idEmail').value
+        usuarios.nomeUsuario = document.getElementById('idNome').value
+        usuarios.cpf = document.getElementById('idCpf').value
+        usuarios.idUsuario = document.getElementById('idUsuario').value
+        usuarios.endereco = endereco
+        usuarios.senha = document.getElementById('idSenha').value
+
+        console.log("usuarios: " + usuarios);
+        var json = JSON.stringify(usuarios);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', url, true);
+        xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
+
+        xhr.onload = function () {
+          var usuario = JSON.parse(xhr.responseText);
+        }
+        xhr.send(json);    
+      }
+
+      function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min;
+      }
+	  </script>
+
+    <div>
+
+      <title>Cadastro de Usuário</title>
+  </head>
+  <body>
+         
+      <div class="main">
+          <h3>Cadastro de Usuário</h3>
+          <div class="content">
+            <form style="width: 500px;">
+                <div class="form-group">
+                  <label for="idEmail">Email</label>
+                  <input type="email" class="form-control" id="idEmail" aria-describedby="emailHelp" placeholder="Seu email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="inputNome">Nome</label>
+                    <input id="idNome" class="form-control" type="text" placeholder="Digite seu nome.">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputCPF">CPF</label>
+                    <input class="form-control" id="idCpf" type="text" placeholder="Digite seu CPF." maxlength="14" onkeypress="formatar('###.###.###-##', this);">
+                </div>
+                
+                <br>
+
+                <div class="form-group">
+                    <label for="inputCPF">CEP</label>
+                    <input class="form-control" id="idCep" type="text" maxlength="9" onkeypress="formatar('#####-###', this);">
+                </div>
+                <div class="form-group">
+                    <label for="inputCPF">Rua</label>
+                    <input class="form-control" id="idRua" type="text">
+                </div>
+                <div class="form-group">
+                    <label for="inputCPF">Bairro</label>
+                    <input class="form-control" id="idBairro" type="text">
+                </div>
+                <div class="form-group">
+                    <label for="inputCPF">Cidade</label>
+                    <input class="form-control" id="idCidade"  type="text">
+                </div>
+                <div class="form-group">
+                    <label for="inputCPF">Estado</label>
+                    <input class="form-control" id="idEstado" type="text">
+                </div>
+                <div class="form-group">
+                    <label for="inputCPF">Numero Residencial</label>
+                    <input class="form-control" id="idNumero" type="text">
+                </div>
+
+                <div class="form-group">
+                    <p>
+                        <label for="idEndereco">Endereco ID</label>
+                        <input type="number" class="form-control" id="idEndereco" placeholder="Digite sua ID de Endereco.">
+                        <label for="idUsuario">Usuario ID</label>
+                        <input type="number" class="form-control" id="idUsuario" placeholder="Digite sua ID de Usuario.">
+                    </p>
+                    
+                </div>
+
+                <br>
+                
+                <div class="form-group">
+                  <label for="idSenha">Senha</label>
+                  <input type="password" class="form-control" id="idSenha">
+                </div>
+               <div>
+            
+                <p class="link">
+                    <button type="button" class="btn btn-primary" onclick="cadastrarEndereco(),cadastrarUsuario()">Cadastrar</button>
+                    Já  tem conta?
+                    <a href="../index.html">login</a>
+                  </p>
+                </div>
+            </form>
+
+            
+          
+        </div>
+    </div>
+</div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
